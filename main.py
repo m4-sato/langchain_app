@@ -55,18 +55,15 @@ def get_current_weather(location, unit="celsius"):
 functions = [
     {
         "name": "get_current_weather",
-        "description": "Get the current weather in a given location."
-        "parameters":{
+        "description": "Get the current weather in a given location.",
+        "parameters": {
             "type": "object",
             "properties": {
-                "location": {"type": "string"},
+                "location": {
                 "type": "string",
                 "description": "The city and state, e.g. Tokyo",
                 },
-                "unit": {
-                    "type": "string",
-                    "enum": ["celsius", "fahrenheit"]
-                },
+                "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
             },
             "required": ["location"],
         },
