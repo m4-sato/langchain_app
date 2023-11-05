@@ -1,11 +1,12 @@
 # langchain_app
 
 ## OpenAI 記事
+
 https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-openai-api
 
-## Prompt Engineering
+[Functon calling](https://platform.openai.com/docs/guides/gpt/function-calling)
 
-- 
+## Prompt Engineering
 
 ### Zero-shot プロンプティング
 
@@ -46,3 +47,7 @@ A：
 私は市場へ行って10個にリンゴを買いました。隣人に２つ、修理工に２つ渡しました。それから5つのリンゴを買って一つ食べました。残りは何個ですか？
 ステップバイステップで考えてみてみましょう。
 ```
+
+## Langchain資料
+
+[Langchainドキュメント](https://python.langchain.com/docs/modules/)
