@@ -51,3 +51,13 @@ A：
 ## Langchain資料
 
 [Langchainドキュメント](https://python.langchain.com/docs/modules/)
+
+## 論文
+
+### RAG(Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks)
+
+[RAG](https://arxiv.org/abs/2005.11401)
+
+### DocumentLoader
+
+[DocumentLoader](https://integrations.langchain.com/)
