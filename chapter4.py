@@ -13,6 +13,9 @@ from langchain.prompts import (
     SystemMessagePromptTemplate,
     HumanMessagePromptTemplate,
 )
+from pydantic import BaseModel, Field
+from langchain.output_parsers import PydanticOutputParser
+
 
 
 load_dotenv()
@@ -65,3 +68,37 @@ chat_prompt = ChatPromptTemplate.from_messages([
 
 messages = chat_prompt.format_prompt(country="イギリス", dish = "肉じゃが").to_messages()
 print(messages)
+
+class Recipe(BaseModel):
+    ingredients: list[str] = Field(description="ingredients of the fish")
+    steps: list[str] = Field(description="steps to make the dish")
+    
+parser = PydanticOutputParser(pydantic_object=Recipe)
+
+format_instructions = parser.get_format_instructions()
+
+print(format_instructions)
+
+template = """料理のレシピを教えてください。
+{format_instructions}
+料理名: {dish}
+"""
+
+prompt = PromptTemplate(
+    template=template,
+    input_variables=["dish"],
+    partial_variables={"format_instructions": format_instructions}
+)
+
+formatted_prompt = prompt.format(dish="カレー")
+
+print(formatted_prompt)
+
+chat = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+messages = [HumanMessage(content=formatted_prompt)]
+output = chat(messages)
+print(output.content)
+
+recipe = parser.parse(output.content)
+print(type(recipe))
+print(recipe)
