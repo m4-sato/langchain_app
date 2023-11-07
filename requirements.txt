@@ -4,3 +4,5 @@ python-dotenv
 langchain
 pydantic
 GitPython
+tiktoken
+chromadb

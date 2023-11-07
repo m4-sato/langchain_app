@@ -61,3 +61,9 @@ A：
 ### DocumentLoader
 
 [DocumentLoader](https://integrations.langchain.com/)
+
+### vector store
+
+[Faiss](https://faiss.ai/index.html)
+[Elasticsearch](https://www.elastic.co/jp/elasticsearch/)
+[Redis](https://redis.io/)
