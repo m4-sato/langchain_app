@@ -6,3 +6,4 @@ pydantic
 GitPython
 tiktoken
 chromadb
+langchain-experimental
