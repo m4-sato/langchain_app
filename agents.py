@@ -8,7 +8,7 @@ from langchain.chat_models import ChatOpenAI
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-chat = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+chat = ChatOpenAI(model_name = "gpt-3.5-turbo", temperature = 0)
 tools = load_tools(["terminal"])
 agent_chain = initialize_agent(
     tools, chat, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION
