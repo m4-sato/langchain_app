@@ -7,3 +7,6 @@ GitPython
 tiktoken
 chromadb
 langchain-experimental
+pygame
+pymunk
+pygame
