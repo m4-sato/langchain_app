@@ -78,3 +78,51 @@ agent_chain = initialize_agent(
 
 result = agent_chain.run("東京と大阪の天気を教えて")
 print(result)
+
+import json
+
+from langchain.chat_models import ChatOpenAI
+from langchain.chains import create_extraction_chain, create_extraction_chain_pydantic
+from langchain.prompts import ChatPromptTemplate
+
+schema = {
+    "properties": {
+        "person_name":{"type":"string"},
+        "person_height":{"type":"integer"},
+        "person_hair_color":{"type":"string"},
+        "dog_name":{"type":"string"},
+        "dog_breed":{"type":"string"},
+    },
+    "required": ["person_name", "person_height"],
+}
+text = """
+Alex is 5 feet tall. Claudia is 1 feet taller Alex and jumps higher than him.
+Claudia is a brunette and Alex is blonde.
+Alex's dog Frosty is a labrador and likes to play hide and seek.
+"""
+
+chat = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+chain = create_extraction_chain(schema, chat)
+
+people = chain.run(text)
+print(json.dumps(people, indent=2))
+
+# ------------
+# LLMによる評価
+# ------------
+
+from langchain.chat_models import ChatOpenAI
+from langchain.evaluation import load_evaluator
+
+chat = ChatOpenAI(model='gpt-4', temperature=0)
+
+evaluator = load_evaluator("qa", eval_llm=chat)
+
+result = evaluator.evaluate_strings(
+    input="私は市場へ行って10このリンゴを買いました。隣人に2つ、修理工に2つ渡しました。それから5つのリンゴを買って1つ食べました。残りは何個ですか?",
+    prediction="""1最初に10個のリンゴを買い、その中から隣人と修理工に2つずつ渡しました。そのため、まず手元に残ったリンゴは10-2-2=6個です。
+    次に5個のリンゴを買い、その中から1個食べました。そのため、手元に残ったリンゴは6 + 5 - 1=10個です。""",
+    reference="10個"
+)
+
+print(result)
