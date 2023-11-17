@@ -11,3 +11,4 @@ pygame
 pymunk
 pygame
 duckduckgo-search
+streamlit
