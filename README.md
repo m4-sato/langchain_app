@@ -82,27 +82,67 @@ A：
 
 ### Cloud9とGitHubの連携
 
-[SSHキーの生成](https://docs.github.com/ja/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key)
+[参考記事](https://luciferous.notion.site/luciferous/Github-AWS-CI-CD-JAWS-FESTA-2023-b5198ec36520483ab44760764323e272)
+
+- cloud9
+
+git config --global user.name "<YOUR NAME>"
+git config --global user.email "<YOUR EMAIL>"
+
+- python環境構築
 
 ```bash
-ssh-keygen -t ed25519 -C "mssst1116@gmail.com"
+curl https://pyenv.run | bash
 ```
 
 ```bash
-Enter a file in which to save the key (/c/Users/YOU/.ssh/id_ALGORITHM):[Press enter]
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
 ```
 
 ```bash
-Enter new passphrase (empty for no passphrase): [Type new passphrase]
+echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
 ```
 
 ```bash
-Enter same passphrase again: [Repeat the new passphrase]
+echo 'eval "$(pyenv init -)"' >> ~/.bashrc
 ```
 
-```github_Key(id_ed25519.pub)
-four_file inner all copy
+```bash
+exec "$SHELL"
 ```
 
-[GitHub fingerprint](https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints)
+```bash
+pyenv --version
+```
 
+```bash
+sudo yum remove -y openssl-devel
+sudo yum install -y openssl11-devel bzip2-devel xz-devel
+```
+
+
+```bash
+pyenv install 3.10
+```
+
+```bash
+cd your_project
+```
+
+```bash
+pyenv local 3.10
+```
+
+```bash
+python -m venv venv
+```
+
+```bash
+source venv/bin/activate
+```
+
+## pipにインストールされているパッケージをrequirements.txtに出力する
+
+```bash
+pip freeze > requirements.txt
+```
