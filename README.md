@@ -144,3 +144,6 @@ source venv/bin/activate
 ```bash
 pip freeze > requirements.txt
 ```
+
+## streamlit Community Cloudへデプロイする
+[Streamlit Community Cloud](https://streamlit.io/cloud)
