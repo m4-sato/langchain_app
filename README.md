@@ -106,3 +106,55 @@ four_file inner all copy
 
 [GitHub fingerprint](https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints)
 
+
+# cloud9とGitHubの連携・streamlitの立ち上げ
+[ChatGPTでの調査](https://chat.openai.com/c/0602ca1c-1a38-407b-a093-6296de63f083)
+
+## step1 cloud9の環境構築
+- テキストを参照
+
+## step2 SSHキー生成とGitHubへの追加
+- cloud9のターミナル（デフォルトのディレクトリにて）
+- GitHub アカウントに関連付けられたメールアドレスに置き換える
+```
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+```
+
+```
+cat ~/.ssh/id_rsa.pub
+```
+- 公開さえたキーの内容をコピー
+- GitHub のアカウント設定に移動し、「SSH and GPG keys」セクションで「New SSH key」をクリックします。
+- キーのタイトルを入力し、先ほどコピーした公開キーを貼り付けて、「Add SSH key」をクリックします。
+
+## step3 GitHub リポジトリのクローン
+```
+git clone git@github.com:ユーザー名/リポジトリ名.git
+```
+
+## step4 Python と Streamlit のインストール
+
+- cloud9のデフオルトpythonは2がインストールされているのでpip3を使用する。
+```
+pip3 install streamlit
+```
+
+## step5 streamlitの実行
+
+- cloud9のEC2のセキュリティグループの設定を行う。
+    - セキュリティグループの設定:
+
+AWS EC2 インスタンス（Cloud9 が実行されている場所）のセキュリティグループ設定を確認し、Streamlit が使用するポート（この場合は 8501）がインターネットからアクセス可能になっているか確認してください。インバウンドルールで適切な設定がなされている必要があります。
+    - Streamlit の設定で、アプリケーションが全てのネットワークインターフェイスをリッスンするように設定されていることを確認してください。つまり、config.toml ファイル（または Streamlit の起動コマンド）で server.address を 0.0.0.0 に設定してください。
+    - ```mkdir -p ~/.streamlit```
+```
+echo "[server]
+address = '0.0.0.0'
+port = 8501
+enableCORS = false" > ~/.streamlit/config.toml
+```
+
+```
+streamlit run app.py --server.port 8080
+```
+
