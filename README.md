@@ -157,4 +157,59 @@ enableCORS = false" > ~/.streamlit/config.toml
 ```
 streamlit run app.py --server.port 8080
 ```
+### python環境構築
 
+```bash
+curl https://pyenv.run | bash
+```
+
+```bash
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+```
+
+```bash
+echo 'command -v pyenv >/dev/null || export PATH="PYENVROOT/bin:PYENV_ROOT/bin:PATH"' >> ~/.bashrc
+```
+
+```bash
+echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+```
+
+```bash
+exec "$SHELL"
+```
+
+```bash
+pyenv --version
+```
+
+```bash
+sudo yum remove -y openssl-devel
+sudo yum install -y openssl11-devel bzip2-devel xz-devel
+```
+
+```bash
+pyenv install 3.10
+```
+
+```bash
+cd your_project
+```
+
+```bash
+pyenv local 3.10
+```
+
+```bash
+python -m venv venv
+```
+
+```bash
+source venv/bin/activate
+```
+
+## pipにインストールされているパッケージをrequirements.txtに出力する
+
+```bash
+pip freeze > requirements.txt
+```
