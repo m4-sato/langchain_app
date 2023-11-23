@@ -76,71 +76,85 @@ A：
 [Elasticsearch](https://www.elastic.co/jp/elasticsearch/)
 [Redis](https://redis.io/)
 
+
 [langchainGitHubエコシステム集](https://github.com/kyrolabs/awesome-langchain)
 [Patterns for Building LLM-based Systems & Prodcts](https://eugeneyan.com/writing/llm-patterns/)
 
 ### Cloud9とGitHubの連携
 
-[参考記事](https://luciferous.notion.site/luciferous/Github-AWS-CI-CD-JAWS-FESTA-2023-b5198ec36520483ab44760764323e272)
-
-- cloud9
-
-git config --global user.name "<YOUR NAME>"
-git config --global user.email "<YOUR EMAIL>"
-
-### python環境構築
+[SSHキーの生成](https://docs.github.com/ja/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key)
 
 ```bash
-curl https://pyenv.run | bash
+ssh-keygen -t ed25519 -C "mssst1116@gmail.com"
 ```
 
 ```bash
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+Enter a file in which to save the key (/c/Users/YOU/.ssh/id_ALGORITHM):[Press enter]
 ```
 
 ```bash
-echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+Enter new passphrase (empty for no passphrase): [Type new passphrase]
 ```
 
 ```bash
-echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+Enter same passphrase again: [Repeat the new passphrase]
 ```
 
-```bash
-exec "$SHELL"
+```github_Key(id_ed25519.pub)
+four_file inner all copy
 ```
 
-```bash
-pyenv --version
+[GitHub fingerprint](https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints)
+
+
+# cloud9とGitHubの連携・streamlitの立ち上げ
+[ChatGPTでの調査](https://chat.openai.com/c/0602ca1c-1a38-407b-a093-6296de63f083)
+
+## step1 cloud9の環境構築
+- テキストを参照
+
+## step2 SSHキー生成とGitHubへの追加
+- cloud9のターミナル（デフォルトのディレクトリにて）
+- GitHub アカウントに関連付けられたメールアドレスに置き換える
+```
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 ```
 
-```bash
-sudo yum remove -y openssl-devel
-sudo yum install -y openssl11-devel bzip2-devel xz-devel
+```
+cat ~/.ssh/id_rsa.pub
+```
+- 公開さえたキーの内容をコピー
+- GitHub のアカウント設定に移動し、「SSH and GPG keys」セクションで「New SSH key」をクリックします。
+- キーのタイトルを入力し、先ほどコピーした公開キーを貼り付けて、「Add SSH key」をクリックします。
+
+## step3 GitHub リポジトリのクローン
+```
+git clone git@github.com:ユーザー名/リポジトリ名.git
 ```
 
-```bash
-pyenv install 3.10
+## step4 Python と Streamlit のインストール
+
+- cloud9のデフオルトpythonは2がインストールされているのでpip3を使用する。
+```
+pip3 install streamlit
 ```
 
-```bash
-cd your_project
+## step5 streamlitの実行
+
+- cloud9のEC2のセキュリティグループの設定を行う。
+    - セキュリティグループの設定:
+
+AWS EC2 インスタンス（Cloud9 が実行されている場所）のセキュリティグループ設定を確認し、Streamlit が使用するポート（この場合は 8501）がインターネットからアクセス可能になっているか確認してください。インバウンドルールで適切な設定がなされている必要があります。
+    - Streamlit の設定で、アプリケーションが全てのネットワークインターフェイスをリッスンするように設定されていることを確認してください。つまり、config.toml ファイル（または Streamlit の起動コマンド）で server.address を 0.0.0.0 に設定してください。
+    - ```mkdir -p ~/.streamlit```
+```
+echo "[server]
+address = '0.0.0.0'
+port = 8501
+enableCORS = false" > ~/.streamlit/config.toml
 ```
 
-```bash
-pyenv local 3.10
+```
+streamlit run app.py --server.port 8080
 ```
 
-```bash
-python -m venv venv
-```
-
-```bash
-source venv/bin/activate
-```
-
-## pipにインストールされているパッケージをrequirements.txtに出力する
-
-```bash
-pip freeze > requirements.txt
-```
