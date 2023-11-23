@@ -76,7 +76,6 @@ A：
 [Elasticsearch](https://www.elastic.co/jp/elasticsearch/)
 [Redis](https://redis.io/)
 
-
 [langchainGitHubエコシステム集](https://github.com/kyrolabs/awesome-langchain)
 [Patterns for Building LLM-based Systems & Prodcts](https://eugeneyan.com/writing/llm-patterns/)
 
@@ -89,7 +88,7 @@ A：
 git config --global user.name "<YOUR NAME>"
 git config --global user.email "<YOUR EMAIL>"
 
-- python環境構築
+### python環境構築
 
 ```bash
 curl https://pyenv.run | bash
@@ -119,7 +118,6 @@ pyenv --version
 sudo yum remove -y openssl-devel
 sudo yum install -y openssl11-devel bzip2-devel xz-devel
 ```
-
 
 ```bash
 pyenv install 3.10
